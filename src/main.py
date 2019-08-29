@@ -17,7 +17,7 @@ sample_num = int(num[1])
 f.close()
 
 # File open
-lcms_data = open(filename, "r", encoding="shift-jis")
+lcms_data = open("dat/"+filename, "r", encoding="shift-jis")
 
 # Extract MS data
 sample_list = []
@@ -59,7 +59,6 @@ for i in range(len(name_list)):
 	for j in range(sample_num):
 		k = int(j/n)
 		sample_list[i][j][2] = sample_list[i][j][2]/strain_od[k]
-		#if(j!=5): #省きたいサンプルのサンプル番号をここで除く
 		cal.append(sample_list[i][j][2])
 		if(j%n==n-1):
 			m = mean(cal)
@@ -73,7 +72,7 @@ for i in range(len(name_list)):
 if not os.path.exists('img'):
     os.mkdir('img')
 colorlist = ['white', 'skyblue', 'midnightblue']
-pdf = PdfPages('graph.pdf')
+pdf = PdfPages('img/graph_all.pdf')
 for i in range(len(graph_data)):
 	left = []
 	height = []
@@ -88,7 +87,7 @@ for i in range(len(graph_data)):
 	plt.ylabel("Relative intensity / $\mathrm{OD_{600}}$", fontsize=15)
 	plt.bar(left, height, yerr=eb, capsize=3, width=0.6, tick_label=strain_name, align='center', color=colorlist, edgecolor='black', linewidth=1)
 	plt.tick_params(labelsize=18)
-	plt.savefig("./img/" + str(i) +".png")
+	plt.savefig("img/" + str(i) +".png")
 	pdf.savefig()
 plt.close()
 pdf.close()
